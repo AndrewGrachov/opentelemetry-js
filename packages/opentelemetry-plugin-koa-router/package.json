@@ -1,14 +1,36 @@
 {
   "name": "@opentelemetry/plugin-koa-router",
   "version": "0.4.0",
+  "description": "OpenTelemetry express automatic instrumentation package.",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "repository": "open-telemetry/opentelemetry-js",
+  "scripts": {
+    "test": "nyc ts-mocha -p tsconfig.json 'test/**/*.ts'"
+  },
   "dependencies": {
     "@opentelemetry/core": "^0.4.0",
     "@opentelemetry/api": "^0.4.0",
     "shimmer": "^1.2.1"
   },
   "devDependencies": {
+    "@opentelemetry/node": "^0.4.0",
+    "@opentelemetry/scope-async-hooks": "^0.4.0",
+    "@opentelemetry/tracing": "^0.4.0",
     "@koa/router": "^8.0.8",
     "@types/koa-router": "^7.4.0",
-    "@types/shimmer": "^1.0.1"
+    "@types/koa__router": "^8.0.2",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.2",
+    "@types/shimmer": "^1.0.1",
+    "gts": "^1.1.0",
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "rimraf": "^3.0.0",
+    "ts-mocha": "^6.0.0",
+    "ts-node": "^8.3.0",
+    "tslint-consistent-codestyle": "^1.16.0",
+    "tslint-microsoft-contrib": "^6.2.0",
+    "typescript": "3.7.2"
   }
 }

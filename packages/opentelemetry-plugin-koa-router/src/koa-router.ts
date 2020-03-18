@@ -23,12 +23,9 @@ import {
   PathParams,
   KoaRouter,
   KoaLayer,
+  kLayerPatched,
 } from './types';
 import { VERSION } from './version';
-/**
- * This symbol is used to mark koa-router layer as being already instrumented
- */
-export const kLayerPatched: unique symbol = Symbol('koa-router-layer-patched');
 
 /** Koa-router instrumentation plugin for OpenTelemetry */
 export class KoaRouterPlugin extends BasePlugin<typeof koaRouter> {
@@ -57,7 +54,7 @@ export class KoaRouterPlugin extends BasePlugin<typeof koaRouter> {
   /** Unpatches all Koa router patched functions. */
   unpatch(): void {
     const routerProto = (this._moduleExports as unknown) as koaRouter;
-    shimmer.unwrap(routerProto, 'use');
+    shimmer.unwrap(routerProto, 'register');
   }
 
   /**
@@ -82,7 +79,22 @@ export class KoaRouterPlugin extends BasePlugin<typeof koaRouter> {
     };
   }
 
-  _applyPatch(layer: KoaLayer, layerPath?: string) {}
+  _applyPatch(layer: KoaLayer, layerPath?: string) {
+    const plugin = this;
+
+    if (layer[kLayerPatched] === true) {
+      return;
+    }
+    layer[kLayerPatched] = true;
+    let stack = layer.stack;
+    if (!Array.isArray(stack)) {
+      stack = [stack];
+    }
+    const n = stack.length;
+    for (let i = 0; i < n; i++) {
+      const handler = stack[n];
+    }
+  }
 
   _getRouter() {}
 }

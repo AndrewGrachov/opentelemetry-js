@@ -4,6 +4,13 @@ export type KoaRouterPluginConfig = {
 
 export type PathParams = string | RegExp | Array<string | RegExp>;
 
+/**
+ * This symbol is used to mark koa-router layer as being already instrumented
+ */
+export const kLayerPatched: unique symbol = Symbol(
+  'koa-router-handler-patched'
+);
+
 // https://github.com/koajs/router/blob/master/lib/router.js#L65
 export type KoaRouter = {
   params: { [key: string]: string };
@@ -24,6 +31,7 @@ export type KoaOptions = {
 
 // https://github.com/koajs/router/blob/master/lib/layer.js#L21
 export type KoaLayer = {
+  [kLayerPatched]: boolean?;
   ignoreCaptures: boolean;
   name: string;
   end: boolean;
